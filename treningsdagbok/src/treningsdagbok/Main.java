@@ -21,12 +21,11 @@ public class Main {
 		}
 	}
 	
-	public void run() throws Exception{
+	public void run(){
 		Scanner scanner = new Scanner(System.in);
 		tui.run();
 		System.out.println("Vil du gjøre noe annet? ja/nei");
 		String svar = scanner.nextLine();
-		System.out.println(svar);
 		if (svar.toLowerCase().equals("ja")){
 			this.run();
 		} else{
