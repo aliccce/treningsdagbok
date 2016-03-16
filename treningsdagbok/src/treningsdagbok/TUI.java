@@ -17,7 +17,7 @@ public class TUI {
 		t = new Treningsøkt(myCon);
 		db = new Database(myCon);
 		this.myCon = myCon;
-		run();
+
 	}
 	
 	public void run() {
@@ -280,35 +280,7 @@ public class TUI {
 	}
 	
 	public void beste_resultat() {
-		Statement statement;
-		
-		System.out.print("Skriv inn type (Tid eller Distanse): ");
-		String type = s.nextLine().toLowerCase();
-		while (! (type.equals("tid") || type.equals("distanse"))) {
-			System.out.print("Feil, du må skrive enten Tid eller Distanse. Prøv igjen: ");
-			type = s.nextLine();
-		}
-		
-		System.out.print("Skriv inn øvingsID: ");
-		String input = s.nextLine();
-		int øvingsid = Integer.parseInt(input);
-		while (! (øvingsid >= 10000 && øvingsid<20000))
-		{
-			System.out.print("Du må skrive inn en øvingsID mellom 10000 og 19999. Prøv igjen: ");
-			input = s.nextLine();
-			øvingsid=Integer.parseInt(input);
-		}
-		
-		ResultSet rs;
-		try {
-			statement = this.myCon.createStatement();
-			rs = statement.executeQuery("select if(Mål.opptil = true, max(Resultat.verdi), min(Resultat.verdi)) as beste_resultat from Resultat natural join Øvelse inner join Mål on (Øvelse.øvingsID = Mål.øvingsID) where Resultat.typ = '" + type + "' and Øvelse.øvingsID = '" + øvingsid + "' and Resultat.typ = Mål.typ;");
-			while(rs.next()) {
-				System.out.println("Gratulerer! Ditt beste resultat er: " + Double.toString(rs.getDouble("beste_resultat")));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		BesteResultat br = new BesteResultat(this.myCon);
+		br.run();
 	}
 }
