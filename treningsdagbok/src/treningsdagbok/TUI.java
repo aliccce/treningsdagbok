@@ -10,11 +10,13 @@ public class TUI {
 	private Treningsøkt t;
 	private Resultat r;
 	private Database db;
+	private Connection myCon;
 	
 	TUI(Connection myCon) {
 		s = new Scanner(System.in);
 		t = new Treningsøkt(myCon);
 		db = new Database(myCon);
+		this.myCon = myCon;
 		run();
 	}
 	
@@ -99,17 +101,27 @@ public class TUI {
 			}
 		}
 		// NOTAT
-		System.out.print("Vil du legge til notat?:");
+		System.out.print("Vil du legge til notat?: ");
 		while (get_yes()) {
 			addNotat();
 			System.out.print("Vil du legge til flere notater?: ");
 		}
 		// RESULTAT
-		System.out.print("Vil du legge til resultat[er]? :");
+		System.out.print("Vil du legge til resultat?: ");
 		while (get_yes()) {
 			t.printØvelser();
-			System.out.print("Hvilken øvelse?: ");
+			System.out.print("Øvelse?: ");
+			int øvingsID = get_positive_int_from_user();
+			System.out.print("Type: ");
+			String type = s.nextLine();
+			System.out.print("Verdi: ");
 			String answer = s.nextLine();
+			double verdi = Double.parseDouble(answer);
+			if (t.addResultat(type, verdi, øvingsID)) {
+				System.out.print("Resultatet ble lagt til.\nVil du legge til flere resultater?: ");
+			} else {
+				System.out.print("ØvingsID er ikke gyldig øvelse. Vil du prøve igjen?: ");
+			}
 		}
 	}
 	
@@ -269,6 +281,35 @@ public class TUI {
 	}
 	
 	public void beste_resultat() {
-		// øvingsID og type
+		Statement statement;
+		
+		System.out.print("Skriv inn type (Tid eller Distanse): ");
+		String type = s.nextLine().toLowerCase();
+		while (! (type.equals("tid") || type.equals("distanse"))) {
+			System.out.print("Feil, du må skrive enten Tid eller Distanse. Prøv igjen: ");
+			type = s.nextLine();
+		}
+		
+		System.out.print("Skriv inn øvingsID: ");
+		String input = s.nextLine();
+		int øvingsid = Integer.parseInt(input);
+		while (! (øvingsid >= 10000 && øvingsid<20000))
+		{
+			System.out.print("Du må skrive inn en øvingsID mellom 10000 og 19999. Prøv igjen: ");
+			input = s.nextLine();
+			øvingsid=Integer.parseInt(input);
+		}
+		
+		ResultSet rs;
+		try {
+			statement = this.myCon.createStatement();
+			rs = statement.executeQuery("select if(Mål.opptil = true, max(Resultat.verdi), min(Resultat.verdi)) as beste_resultat from Resultat natural join Øvelse inner join Mål on (Øvelse.øvingsID = Mål.øvingsID) where Resultat.typ = '" + type + "' and Øvelse.øvingsID = '" + øvingsid + "' and Resultat.typ = Mål.typ;");
+			while(rs.next()) {
+				System.out.println("Gratulerer! Ditt beste resultat er: " + Double.toString(rs.getDouble("beste_resultat")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

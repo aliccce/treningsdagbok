@@ -157,9 +157,9 @@ public class Treningsøkt {
 		try{
 			Statement stmt = myCon.createStatement();
 			for (int øvingsID: øvelser){
-				ResultSet result = stmt.executeQuery("select Øvingsnavn from Øvelse where øvingsID = " + øvingsID + ";");
+				ResultSet result = stmt.executeQuery("select Øvingsnavn as navn from Øvelse where øvingsID = " + øvingsID + ";");
 				if(result.first()){
-					System.out.println(øvingsID + " ... " + result.getString("øvingsnavn"));
+					System.out.println(øvingsID + " ... " + result.getString("navn"));
 				}
 			}
 			for (int gruppeID: grupper){

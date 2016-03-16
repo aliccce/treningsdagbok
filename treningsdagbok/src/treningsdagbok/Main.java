@@ -54,7 +54,7 @@ public class Main {
 		Main m = new Main();
 		m.init();
 		try{
-			m.run();
+			//m.run();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
