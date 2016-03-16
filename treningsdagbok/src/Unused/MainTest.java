@@ -1,8 +1,9 @@
-package treningsdagbok;
+package Unused;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import treningsdagbok.Treningsokt;
+import treningsdagbok.DatabaseConnection;
 import treningsdagbok.TUI;
 
 public class MainTest {
@@ -17,7 +18,6 @@ public class MainTest {
 			DatabaseConnection db = new DatabaseConnection();
 			myCon = DriverManager.getConnection(db.getDatabase(), db.getUser(), db.getPw());
 			tr = new Treningsokt(myCon);
-			tui = new TUI(myCon);
 			
 		} catch (Exception e){
 			e.printStackTrace();
