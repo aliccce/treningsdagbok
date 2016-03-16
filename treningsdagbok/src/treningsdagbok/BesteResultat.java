@@ -5,7 +5,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 
-public class BesteResultat extends Spørring{
+public class BesteResultat extends Sporring{
 
 	public BesteResultat(Connection myCon) {
 		super(myCon);
