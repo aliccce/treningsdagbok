@@ -7,13 +7,13 @@ import java.sql.*;
 public class TUI {
 	
 	private Scanner s;
-	private Treningsøkt t;
+	private Treningsokt t;
 	private Resultat r;
 	private Database db;
 	
 	TUI(Connection myCon) {
 		s = new Scanner(System.in);
-		t = new Treningsøkt(myCon);
+		t = new Treningsokt(myCon);
 		db = new Database(myCon);
 	}
 	

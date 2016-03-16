@@ -2,12 +2,12 @@ package treningsdagbok;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import treningsdagbok.Treningsøkt;
+import treningsdagbok.Treningsokt;
 import treningsdagbok.TUI;
 
 public class MainTest {
 	Connection myCon;
-	Treningsøkt tr;
+	Treningsokt tr;
 	TUI tui;
 	
 	public void init(){
@@ -16,7 +16,7 @@ public class MainTest {
 			Class.forName("com.mysql.jdbc.Driver");
 			DatabaseConnection db = new DatabaseConnection();
 			myCon = DriverManager.getConnection(db.getDatabase(), db.getUser(), db.getPw());
-			tr = new Treningsøkt(myCon);
+			tr = new Treningsokt(myCon);
 			tui = new TUI(myCon);
 			
 		} catch (Exception e){
