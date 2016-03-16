@@ -114,14 +114,16 @@ public class Treningsøkt {
 	}
 	
 	
-	public void addResultat(String type, double verdi, int øvingsID){
+	public boolean addResultat(String type, double verdi, int øvingsID){
 		/* Per nå sjekker denne metoden bare opp mot øvelser-lista, ikke grupper. Dette kan legges til seinere,
 		men det krever kanskje at vi må lese fra databasen hvilke øvelser gruppen inneholder. Dette kan fikses
 		i checkØvingsID.*/
-		if (this.checkØvingsID(øvingsID)){
+		boolean validØvingsID = this.checkØvingsID(øvingsID);
+		if (validØvingsID){
 			Resultat res = new Resultat(this.treningsID, øvingsID, type, verdi);
 			this.resultater.add(res);
 		}
+		return validØvingsID;
 	}
 	
 	public void fillDatabase(){
