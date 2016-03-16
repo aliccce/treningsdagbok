@@ -3,7 +3,7 @@ import java.sql.Connection;
 
 
 public abstract class Sporring {
-	Connection myCon;
+	protected Connection myCon;
 
 	public Sporring(Connection myCon){
 		this.myCon = myCon;
