@@ -19,7 +19,7 @@ public class BesteResultat extends Sporring{
 			Statement s = super.myCon.createStatement();
 			
 			Scanner scanner = new Scanner(System.in);
-			 
+			
 			System.out.print("Skriv inn type (Tid eller Distanse): ");
 			String type = scanner.nextLine();
 			while (! (type.equals("Tid") || type.equals("Distanse"))) {
@@ -29,7 +29,6 @@ public class BesteResultat extends Sporring{
 			
 			
 			ArrayList<Integer> øvelser = printØvelser(type);
-			øvelser.toString();
 			
 			System.out.print("Skriv inn øvingsID: ");
 			String input = scanner.nextLine();
@@ -40,9 +39,7 @@ public class BesteResultat extends Sporring{
 				input = scanner.nextLine();
 				øvingsid = Integer.parseInt(input);
 			}
-			
-			scanner.close();
-			
+						
 			ResultSet rs = s.executeQuery("select if(Mål.opptil = true, max(Resultat.verdi), min(Resultat.verdi)) as beste_resultat "
 					+ "from Resultat natural join Øvelse inner join Mål on (Øvelse.øvingsID = Mål.øvingsID) "
 					+ "where Resultat.typ = '" + type + "' and Øvelse.øvingsID = '" + øvingsid + "' and Resultat.typ = Mål.typ;");
@@ -81,7 +78,7 @@ public class BesteResultat extends Sporring{
 	}
 	
 	private boolean listContains(ArrayList<Integer> list, int num){
-		return list.stream().anyMatch(n -> n.equals(num));
+		return list.stream().anyMatch(nim -> nim.equals(num));
 	}
 
 }
