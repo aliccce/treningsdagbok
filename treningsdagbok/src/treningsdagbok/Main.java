@@ -26,6 +26,7 @@ public class Main {
 		tui.run();
 		System.out.println("Vil du gjøre noe annet? ja/nei");
 		String svar = scanner.nextLine();
+		System.out.println(svar);
 		if (svar.toLowerCase().equals("ja")){
 			this.run();
 		} else{
@@ -44,5 +45,5 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-
+	
 }
