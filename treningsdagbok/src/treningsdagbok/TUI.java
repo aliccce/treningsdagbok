@@ -38,6 +38,7 @@ public class TUI {
 			System.out.print("Du må velge 1, 2, 3 eller 4. Prøv igjen.\n> ");
 			velg_aksjon();
 		}
+		
 	}
 	
 	public void ny_treningsøkt() {
