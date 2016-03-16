@@ -15,7 +15,6 @@ public class TUI {
 		s = new Scanner(System.in);
 		t = new Treningsøkt(myCon);
 		db = new Database(myCon);
-		run();
 	}
 	
 	public void run() {
