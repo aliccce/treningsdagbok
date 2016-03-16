@@ -53,11 +53,12 @@ public class Main {
 	public static void main(String[] args) {
 		Main m = new Main();
 		m.init();
+		/*
 		try{
-			//m.run();
+			m.run();
 		} catch(Exception e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }

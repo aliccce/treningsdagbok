@@ -322,9 +322,9 @@ public class Treningsøkt {
 				System.out.println("Din verdi var på " + res.verdi + ".");
 				try{
 					Statement stmt = myCon.createStatement();
-					ResultSet result = stmt.executeQuery("select Øvingsnavn from Øvelse where ØvingsID = " + res.øvingsID + ";");
+					ResultSet result = stmt.executeQuery("select Øvingsnavn as navn from Øvelse where ØvingsID = " + res.øvingsID + ";");
 					if (result.first()){
-						System.out.println("Øvelsen var " + result.getString("Øvingsnavn") + ", og måltypen var " + res.type + ".");
+						System.out.println("Øvelsen var " + result.getString("navn") + ", og måltypen var " + res.type + ".");
 					}
 				} catch(Exception e){
 					e.printStackTrace();

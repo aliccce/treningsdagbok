@@ -123,6 +123,7 @@ public class TUI {
 				System.out.print("ØvingsID er ikke gyldig øvelse. Vil du prøve igjen?: ");
 			}
 		}
+		t.fillDatabase();
 	}
 	
 	
@@ -269,8 +270,6 @@ public class TUI {
 		}
 		return Integer.parseInt(input);
 	}
-	
-	
 	
 	public void alle_treningsøkter() {
 		
