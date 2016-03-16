@@ -14,7 +14,8 @@ public class Main {
 		try {
 			// Activate driver and create connection with database.
 			Class.forName("com.mysql.jdbc.Driver");
-			myCon = DriverManager.getConnection("", "", "");
+			DatabaseConnection db = new DatabaseConnection();
+			myCon = DriverManager.getConnection(db.getDatabase(), db.getUser(), db.getPw());
 			tr = new Treningsøkt(myCon);
 			tui = new TUI(myCon);
 			
