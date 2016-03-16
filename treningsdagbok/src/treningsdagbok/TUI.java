@@ -282,7 +282,7 @@ public class TUI {
 	}
 	
 	public void beste_resultat() {
-		beste_resultat br = new beste_resultat(this.myCon);
+		BesteResultat br = new BesteResultat(this.myCon);
 		br.run();
 	}
 }
