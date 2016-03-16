@@ -15,7 +15,7 @@ public class Main {
 			db = new DatabaseConnection();
 			myCon = DriverManager.getConnection(db.getDatabase(), db.getUser(), db.getPw());
 			tui = new TUI(myCon);
-			
+			tui.run();
 		} catch (Exception e){
 			e.printStackTrace();
 		}

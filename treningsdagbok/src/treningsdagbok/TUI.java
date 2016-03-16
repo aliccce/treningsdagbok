@@ -272,15 +272,17 @@ public class TUI {
 	}
 	
 	public void alle_treningsøkter() {
-		
+		AlleTreningsøkter at = new AlleTreningsøkter(this.myCon);
+		at.run();
 	}
 	
 	public void periode_oversikt() {
-		
+		SummertTrening st = new SummertTrening(this.myCon);
+		st.run();
 	}
 	
 	public void beste_resultat() {
-		BesteResultat br = new BesteResultat(this.myCon);
+		beste_resultat br = new beste_resultat(this.myCon);
 		br.run();
 	}
 }
