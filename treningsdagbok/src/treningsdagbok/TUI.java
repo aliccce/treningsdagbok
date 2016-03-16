@@ -15,6 +15,7 @@ public class TUI {
 		s = new Scanner(System.in);
 		t = new Treningsøkt(myCon);
 		db = new Database(myCon);
+		run();
 	}
 	
 	public void run() {
@@ -23,7 +24,7 @@ public class TUI {
 	}
 	
 	public void velg_aksjon() {
-		String input = s.next();
+		String input = s.nextLine();
 		if (input.equals("1")) {
 			ny_treningsøkt();
 		} else if (input.equals("2")) {
@@ -41,17 +42,17 @@ public class TUI {
 	public void ny_treningsøkt() {
 		// DATO
 		System.out.print("Dato [åååå-mm-dd]: ");
-		String dato = s.next();
+		String dato = s.nextLine();
 		while (! dato.matches("\\d{4}-\\d{2}-\\d{2}")) {
 			System.out.print("Feil datoformat. Prøv igjen. Format: åååå-mm-dd\n>");
-			dato = s.next();
+			dato = s.nextLine();
 		}
 		// TIDSPUNKT
 		System.out.print("Tidspunkt [tt:mm:ss]: ");
-		String tidspunkt = s.next();
+		String tidspunkt = s.nextLine();
 		while (! tidspunkt.matches("\\d{2}:\\d{2}:\\d{2}")) {
 			System.out.print("Feil tidsformat. Prøv igjen. Format: tt:mm:ss\n> ");
-			tidspunkt = s.next();
+			tidspunkt = s.nextLine();
 		}
 		// VARIGHET
 		System.out.print("Varighet (antall minutter): ");
@@ -72,18 +73,62 @@ public class TUI {
 		}
 		// VELG ØVELSER
 		System.out.print("Vil du legge til enkeltøvelser? : ");
-		String answer = s.next();
-		if (answer.toLowerCase().equals("ja")) {
+		if (get_yes()) {
 			System.out.println("\nVelg øvelser av følgende øvelser: (format: ØvelseID separtert med mellomrom)");
 			velg_øvelser();
 		}
 		// VELG GRUPPER
 		System.out.print("Vil du legge til grupper? : ");
-		answer = s.next();
-		if (answer.toLowerCase().equals("ja")) {
+		if (get_yes()) {
 			System.out.println("\nVelg grupper av følgende grupper: (format: GruppeID separtert med mellomrom)");
 			velg_grupper();
 		}
+		// MAL
+		System.out.print("Skal treningsøkten brukes som mal?: ");
+		if (get_yes()) {
+			System.out.print("Navn på mal: ");
+			String malName = s.nextLine();
+			boolean mal;
+			try {
+				mal = t.setMal(malName);
+				if (!mal) {
+					System.out.println("Denne treningsøkten er allerede en mal.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// NOTAT
+		System.out.print("Vil du legge til notat?:");
+		while (get_yes()) {
+			addNotat();
+			System.out.print("Vil du legge til flere notater?: ");
+		}
+		// RESULTAT
+		System.out.print("Vil du legge til resultat[er]? :");
+		while (get_yes()) {
+			t.printØvelser();
+			System.out.print("Hvilken øvelse?: ");
+			String answer = s.nextLine();
+		}
+	}
+	
+	
+	
+	private void addNotat() {
+		System.out.print("Notattype: ");
+		String type = s.nextLine();
+		System.out.print("Beskrivelse: ");
+		String beskrivelse = s.nextLine();
+		t.addNotat(type, beskrivelse);
+	}
+
+	private boolean get_yes() {
+		String answer = s.nextLine();
+		if (answer.toLowerCase().equals("ja")) {
+			return true;
+		}
+		return false;
 	}
 	
 	private void velg_grupper() {
@@ -166,17 +211,17 @@ public class TUI {
 	}
 	
 	private void velg_omgivelse() {
-		String input = s.next();
+		String input = s.nextLine();
 		input = input.toLowerCase();
 		if (input.equals("utendørs")) {
 			System.out.print("Temperatur: ");
 			int temperatur = get_int_from_user();
 			System.out.print("Værtype: ");
-			String værtype = s.next();
+			String værtype = s.nextLine();
 			t.setUtendørs(temperatur, værtype);
 		} else if (input.equals("innendørs")) {
 			System.out.print("Ventilasjon: ");
-			String ventilasjon = s.next();
+			String ventilasjon = s.nextLine();
 			System.out.print("Antall tilskuere: ");
 			int antallTilskuere = get_positive_int_from_user();
 			t.setInnendørs(ventilasjon, antallTilskuere);
@@ -187,28 +232,28 @@ public class TUI {
 	}
 	
 	private int get_int_from_user() {
-		String input = s.next();
+		String input = s.nextLine();
 		while (! input.matches("^-?\\d+$")) {
 			System.out.println("Må være heltall. Prøv igjen.\n> ");
-			input = s.next();
+			input = s.nextLine();
 		}
 		return Integer.parseInt(input);
 	}
 	
 	private int get_positive_int_from_user() {
-		String input = s.next();
+		String input = s.nextLine();
 		while (! input.matches("^[0-9]+$")) {
 			System.out.print("Må være positivt heltall. Prøv igjen.\n> ");
-			input = s.next();
+			input = s.nextLine();
 		}
 		return Integer.parseInt(input);
 	}
 	
 	private int get_int_between_1_and_10() {
-		String input = s.next();
+		String input = s.nextLine();
 		while (! input.matches("[1-9]|10")) {
 			System.out.print("Må være heltall fra 1-10. Prøv igjen.\n> ");
-			input = s.next();
+			input = s.nextLine();
 		}
 		return Integer.parseInt(input);
 	}
