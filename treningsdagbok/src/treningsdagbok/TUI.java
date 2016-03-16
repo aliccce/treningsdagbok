@@ -8,7 +8,6 @@ public class TUI {
 	
 	private Scanner s;
 	private Treningsokt t;
-	private Resultat r;
 	private Database db;
 	private Connection myCon;
 	
