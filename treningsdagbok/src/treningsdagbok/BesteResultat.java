@@ -2,6 +2,7 @@ package treningsdagbok;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -21,19 +22,23 @@ public class BesteResultat extends Sporring{
 			 
 			System.out.print("Skriv inn type (Tid eller Distanse): ");
 			String type = scanner.nextLine();
-			while (! (type.equals("tid") || type.equals("distanse"))) {
+			while (! (type.equals("Tid") || type.equals("Distanse"))) {
 				System.out.print("Feil, du må skrive enten Tid eller Distanse. Prøv igjen: ");
 				type = scanner.nextLine();
 			}
 			
+			
+			ArrayList<Integer> øvelser = printØvelser(type);
+			øvelser.toString();
+			
 			System.out.print("Skriv inn øvingsID: ");
 			String input = scanner.nextLine();
 			int øvingsid = Integer.parseInt(input);
-			while (! (øvingsid >= 10000 && øvingsid<20000))
+			while (!listContains(øvelser, øvingsid))
 			{
-				System.out.print("Du må skrive inn en øvingsID mellom 10000 og 19999. Prøv igjen: ");
+				System.out.print("Øvingsid-en må være i listen. Prøv igjen: ");
 				input = scanner.nextLine();
-				øvingsid=Integer.parseInt(input);
+				øvingsid = Integer.parseInt(input);
 			}
 			
 			scanner.close();
@@ -49,6 +54,34 @@ public class BesteResultat extends Sporring{
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		
+	}
+	
+	private ArrayList<Integer> printØvelser(String type){
+		try{
+			Statement stmt = myCon.createStatement();
+			ResultSet rs = stmt.executeQuery("select øvingsID as id, øvingsnavn as navn "
+					+ "from Øvelse natural join Resultat where Resultat.typ = \"" + type + "\";");
+			ArrayList<Integer> øvelser = new ArrayList<Integer>();
+			while(rs.next()){
+				int id = rs.getInt("id");
+				String navn = rs.getString("navn");
+				if (!listContains(øvelser, id)){
+					System.out.println(id + " ... " + navn);
+					øvelser.add(id);
+				}
+			}
+			return øvelser;
+		} catch(Exception e){
+			e.printStackTrace();
+		} 
+		return null;
+		
+	}
+	
+	private boolean listContains(ArrayList<Integer> list, int num){
+		return list.stream().anyMatch(n -> n.equals(num));
 	}
 
 }
