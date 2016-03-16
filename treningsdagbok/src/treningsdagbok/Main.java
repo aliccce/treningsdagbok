@@ -15,7 +15,7 @@ public class Main {
 			db = new DatabaseConnection();
 			myCon = DriverManager.getConnection(db.getDatabase(), db.getUser(), db.getPw());
 			tui = new TUI(myCon);
-			
+			tui.run();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -28,11 +28,12 @@ public class Main {
 	public static void main(String[] args) {
 		Main m = new Main();
 		m.init();
+		/*
 		try{
 			m.run();
 		} catch(Exception e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }

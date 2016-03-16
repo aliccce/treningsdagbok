@@ -10,11 +10,14 @@ public class TUI {
 	private Treningsokt t;
 	private Resultat r;
 	private Database db;
+	private Connection myCon;
 	
 	TUI(Connection myCon) {
 		s = new Scanner(System.in);
 		t = new Treningsokt(myCon);
 		db = new Database(myCon);
+		this.myCon = myCon;
+
 	}
 	
 	public void run() {
@@ -98,18 +101,29 @@ public class TUI {
 			}
 		}
 		// NOTAT
-		System.out.print("Vil du legge til notat?:");
+		System.out.print("Vil du legge til notat?: ");
 		while (get_yes()) {
 			addNotat();
 			System.out.print("Vil du legge til flere notater?: ");
 		}
 		// RESULTAT
-		System.out.print("Vil du legge til resultat[er]? :");
+		System.out.print("Vil du legge til resultat?: ");
 		while (get_yes()) {
 			t.printØvelser();
-			System.out.print("Hvilken øvelse?: ");
+			System.out.print("Øvelse?: ");
+			int øvingsID = get_positive_int_from_user();
+			System.out.print("Type: ");
+			String type = s.nextLine();
+			System.out.print("Verdi: ");
 			String answer = s.nextLine();
+			double verdi = Double.parseDouble(answer);
+			if (t.addResultat(type, verdi, øvingsID)) {
+				System.out.print("Resultatet ble lagt til.\nVil du legge til flere resultater?: ");
+			} else {
+				System.out.print("ØvingsID er ikke gyldig øvelse. Vil du prøve igjen?: ");
+			}
 		}
+		t.fillDatabase();
 	}
 	
 	
@@ -257,17 +271,18 @@ public class TUI {
 		return Integer.parseInt(input);
 	}
 	
-	
-	
 	public void alle_treningsøkter() {
-		
+		AlleTreningsøkter at = new AlleTreningsøkter(this.myCon);
+		at.run();
 	}
 	
 	public void periode_oversikt() {
-		
+		SummertTrening st = new SummertTrening(this.myCon);
+		st.run();
 	}
 	
 	public void beste_resultat() {
-		// øvingsID og type
+		beste_resultat br = new beste_resultat(this.myCon);
+		br.run();
 	}
 }
