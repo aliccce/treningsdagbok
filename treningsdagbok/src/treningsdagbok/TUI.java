@@ -66,7 +66,7 @@ public class TUI {
 		System.out.print("Prestasjon [1-10]: ");
 		int prestasjon = get_int_between_1_and_10();
 		// INNENDØRS // UTENDØRS
-		System.out.print("Utendørs eller innendørs? : ");
+		System.out.print("Ute eller inne?");
 		velg_omgivelse();
 		try {
 			t.setGeneral(dato, tidspunkt, varighet, personlig_form, prestasjon);
@@ -226,20 +226,20 @@ public class TUI {
 	private void velg_omgivelse() {
 		String input = s.nextLine();
 		input = input.toLowerCase();
-		if (input.equals("utendørs")) {
+		if (input.equals("ute")) {
 			System.out.print("Temperatur: ");
 			int temperatur = get_int_from_user();
 			System.out.print("Værtype: ");
 			String værtype = s.nextLine();
 			t.setUtendørs(temperatur, værtype);
-		} else if (input.equals("innendørs")) {
+		} else if (input.equals("inne")) {
 			System.out.print("Ventilasjon: ");
 			String ventilasjon = s.nextLine();
 			System.out.print("Antall tilskuere: ");
 			int antallTilskuere = get_positive_int_from_user();
 			t.setInnendørs(ventilasjon, antallTilskuere);
 		} else {
-			System.out.println("Må være 'utendørs' eller 'innendørs'. Prøv igjen. \n> ");
+			System.out.println("Må være 'ute' eller 'inne'. Prøv igjen. \n> ");
 			velg_omgivelse();
 		}
 	}
