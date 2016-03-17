@@ -46,6 +46,7 @@ public class Treningsokt {
 		
 	// Resultat
 	private ArrayList<Resultat> resultater;
+	private ArrayList<Integer> gruppeAndØvelse;
 	
 	
 	public Treningsokt(Connection myCon){
@@ -179,9 +180,11 @@ public class Treningsokt {
 					
 				}	
 			}
+			this.gruppeAndØvelse = printedØvelser;
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 	
 	private boolean checkIntegerInList(ArrayList<Integer> list, int num){
@@ -190,7 +193,7 @@ public class Treningsokt {
 	
 	// PRIVATE METHODS
 	private boolean checkØvingsID(int øvingsID){
-		return this.øvelser.stream().anyMatch(øvid -> øvid == øvingsID);
+		return this.gruppeAndØvelse.stream().anyMatch(øvid -> øvid == øvingsID);
 	}
 	
 	private void insertTreningsøkt(){
