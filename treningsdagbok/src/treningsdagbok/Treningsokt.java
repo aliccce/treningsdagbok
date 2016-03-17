@@ -236,12 +236,14 @@ public class Treningsokt {
 	
 	private void insertMal(){
 		try{
-			String insertion = "insert into Mal values (?, ?, ?);";
-			PreparedStatement prepStmt = myCon.prepareStatement(insertion);
-			prepStmt.setInt(1, malID);
-			prepStmt.setInt(2,  treningsID);
-			prepStmt.setString(3, malName);
-			prepStmt.execute();
+			if(this.mal){
+				String insertion = "insert into Mal values (?, ?, ?);";
+				PreparedStatement prepStmt = myCon.prepareStatement(insertion);
+				prepStmt.setInt(1, malID);
+				prepStmt.setInt(2,  treningsID);
+				prepStmt.setString(3, malName);
+				prepStmt.execute();
+			}
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -257,6 +259,7 @@ public class Treningsokt {
 				prepStmt.setString(3, notat[0]);
 				prepStmt.setString(4, notat[1]);
 				prepStmt.execute();
+		
 			}
 		} catch(Exception e){
 			e.printStackTrace();
